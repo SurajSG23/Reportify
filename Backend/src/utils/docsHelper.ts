@@ -278,7 +278,7 @@ async function createDocument(topic: string, content: string, res : Response, su
          new Paragraph({
            children: [
              new TextRun({ 
-               text:  `Department of ${professorDetails.department} (2024-2025)`, 
+               text:  `Department of ${professorDetails.department} (${new Date().getFullYear()}-${new Date().getFullYear()+1})`, 
                bold: true, 
                size: 32, 
                font: "Times New Roman", 
