@@ -6,7 +6,7 @@ import { config } from ".";
 const getModelIndex = (title: string)=>{
   const index = Math.floor(Math.random() * 2);
   console.log("Content Index: ", index);
-  return 1
+  return index
 }
 
 const getKeyIndex = ()=>{
@@ -19,7 +19,7 @@ const getReportModel = (title: string) => {
   const apiKey = getKeyIndex() ? config.GEMINI_API_KEY_1 : config.GEMINI_API_KEY_2;
 const genAI = new GoogleGenerativeAI(apiKey);
   return genAI.getGenerativeModel({
-    model: getModelIndex(title) ? config["GEMINI2.5"]: config["GEMINI2.0"],
+    model: getModelIndex(title) ? config["GEMINI_FLASH_LITE_LATEST"]: config["GEMINI2.5"],
     systemInstruction: `
   Generate a well-structured MDX document about the given topic, subject and description with the following sections:
   1. Title (H1)
@@ -35,7 +35,6 @@ const genAI = new GoogleGenerativeAI(apiKey);
   Dont give any tables as this content will go inside the docx as it is and it could ruin the document
   Dont wrap it inside code blocks
   Dont give conclusion and intro section unless asked for
-
   `,
   });
 }
