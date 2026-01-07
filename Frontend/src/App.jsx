@@ -101,9 +101,6 @@ export default function App() {
           <h3 className="text-2xl md:text-3xl font-medium mb-8 text-cyan-200 animate-fade-in-up delay-100">
             An AI-driven Report Generator
           </h3>
-          {/* <h3 className="text-2xl md:text-3xl font-medium mb-8 text-red-500 animate-fade-in-up delay-100">
-            ⚠️Reportify is currently experiencing technical difficulties and has been temporarily closed. <br/> We are working to resolve the issue as quickly as possible.
-          </h3> */}
 
           <div className="max-w-3xl mx-auto mb-12 text-lg md:text-xl text-gray-300 leading-relaxed animate-fade-in-up delay-200">
             <span className="font-medium text-gray-100">{text}</span>
