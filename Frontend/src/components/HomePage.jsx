@@ -497,9 +497,26 @@ const HomePage = () => {
             <p className="mt-4 text-2xl font-medium text-gray-300 text-center">
               Your report is being generated. Please wait.
             </p>
-            <span className="mt-2 text-xl font-semibold text-blue-400 animate-pulse">
+            <span className="mt-2 text-md font-semibold text-blue-400 animate-pulse">
               Generating {currentSection}... ( {num} / {sections.length} )
             </span>
+            <p className="text-sm text-gray-400 text-center mt-2">
+              Hang tight! Feel free to play a quick game while we work.😀
+            </p>
+
+            <div className="w-full flex justify-center">
+              <iframe
+                src="https://reportify-game.vercel.app/"
+                width="600"
+                height="250"
+                className="border-none rounded-lg bg-white"
+                title="Dino Jump Game"
+              />
+            </div>
+
+            <p className="text-xs text-gray-500 text-center">
+              Tap the screen and press space to jump.
+            </p>
           </div>
         </div>
       )}
