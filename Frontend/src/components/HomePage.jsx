@@ -520,9 +520,14 @@ const HomePage = () => {
             </div>
 
             <p className="text-xs text-gray-500 text-center my-2">
-              Tap the dino or press space to jump.
-            </p>
+              <span className="block sm:hidden">
+                Tap the dino to start.
+              </span>
 
+              <span className="hidden sm:block">
+                Tap the dino and press space to start.
+              </span>
+            </p>
           </div>
         </div>
       )}
