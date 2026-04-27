@@ -50,29 +50,42 @@ const About = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-black">
-        <div className="w-12 h-12 border-4 border-gray-400 border-t-transparent rounded-full animate-spin" />
-        <p className="text-white mt-4">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white">
+        <div className="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900/60 px-6 py-4 backdrop-blur-sm">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-cyan-300/30 border-t-cyan-300"></div>
+          <p className="text-sm tracking-wide text-slate-200">Loading about page...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-[100vh] justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
-      <Header handleLogout={handleLogout} />
-      <div className=" text-white flex flex-col justify-center items-center py-10">
-        <h2 className="text-4xl font-bold text-cyan-400 mb-4">About Us</h2>
-        <p className="text-lg text-gray-300 max-w-2xl text-center">
-          Welcome to{" "}
-          <span className="text-cyan-300 font-semibold">REPORTIFY</span>, your
-          AI-powered solution for effortless and professional report generation.
-          Designed specifically for JSS STU students, our platform simplifies
-          documentation for students and educators, ensuring time efficiency,
-          accuracy, and structured formatting. Transform your ideas into
-          well-organized reports instantly and focus on what truly matters.
-        </p>
+    <main className="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-20 left-[-8%] h-[360px] w-[360px] rounded-full bg-cyan-700/20 blur-[120px]"></div>
+        <div className="absolute top-[36%] right-[-8%] h-[310px] w-[310px] rounded-full bg-blue-700/20 blur-[110px]"></div>
+      </div>
 
-        <div className="flex flex-wrap justify-center items-center sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10 w-full cursor-pointer">
+      <Header handleLogout={handleLogout} />
+
+      <section className="relative mx-auto w-full max-w-7xl flex-1 px-5 pb-14 pt-8 sm:px-8 lg:px-12">
+        <div className="mx-auto max-w-4xl text-center">
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">About REPORTIFY</p>
+          <h1 className="mt-2 text-3xl font-semibold text-white sm:text-5xl">Built to make academic reporting effortless</h1>
+          <p className="mt-5 text-sm leading-relaxed text-slate-300 sm:text-lg">
+            Welcome to <span className="font-semibold text-cyan-200">REPORTIFY</span>, your AI-powered solution for faster, cleaner,
+            and more professional report generation. Designed for JSS STU students, REPORTIFY streamlines documentation
+            with structured sections, better consistency, and practical submission-ready output so you can focus on learning and building.
+          </p>
+        </div>
+
+        <div className="mt-10 grid gap-4 sm:grid-cols-3">
+          <MetricCard label="Built For" value="JSS STU Students" />
+          <MetricCard label="Output" value="Structured DOCX Reports" />
+          <MetricCard label="Goal" value="Speed + Clarity + Consistency" />
+        </div>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <FeatureCard
             title="AI-Powered"
             desc="Generate structured, context-aware reports with AI in just seconds—no manual effort required."
@@ -86,16 +99,32 @@ const About = () => {
             desc="Automate your reporting process end-to-end, saving time and boosting productivity."
           />
         </div>
-      </div>
+
+        <div className="mx-auto mt-10 max-w-4xl rounded-2xl border border-slate-700/80 bg-slate-900/55 p-6 text-center shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-8">
+          <h2 className="text-2xl font-semibold text-cyan-200">Why this project exists</h2>
+          <p className="mt-3 text-sm leading-relaxed text-slate-300 sm:text-base">
+            Traditional report writing is repetitive and time-consuming. REPORTIFY reduces that overhead while maintaining
+            structure and readability, so students can spend less time formatting and more time improving project quality.
+          </p>
+        </div>
+      </section>
+
       <Footer handleLogout={handleLogout} />
-    </div>
+    </main>
   );
 };
 
+const MetricCard = ({ label, value }) => (
+  <div className="rounded-2xl border border-slate-700/80 bg-slate-900/55 px-4 py-5 text-center shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm">
+    <p className="text-xs uppercase tracking-[0.2em] text-cyan-300/80">{label}</p>
+    <p className="mt-2 text-sm font-semibold text-slate-100 sm:text-base">{value}</p>
+  </div>
+);
+
 const FeatureCard = ({ title, desc }) => (
-  <div className="bg-gray-900 h-auto py-8 px-10 rounded-xl shadow-lg border border-gray-700 hover:scale-105 transition-transform duration-300">
-    <h3 className="text-xl font-semibold text-cyan-300 mb-2">{title}</h3>
-    <p className="text-gray-400 w-64">{desc}</p>
+  <div className="rounded-2xl border border-slate-700/80 bg-slate-900/55 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-[0_14px_28px_rgba(8,145,178,0.2)]">
+    <h3 className="text-xl font-semibold text-cyan-200">{title}</h3>
+    <p className="mt-3 text-sm leading-relaxed text-slate-300">{desc}</p>
   </div>
 );
 
