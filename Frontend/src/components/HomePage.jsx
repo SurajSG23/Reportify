@@ -590,19 +590,24 @@ const HomePage = () => {
         maxCredits={maxCredits}
         renewalDateFormatted={renewalDateFormatted}
       />
-      <div className="min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-black via-zinc-900 to-black text-white">
+      <div className="relative min-h-screen w-full overflow-x-hidden bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white">
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-20 left-[-10%] h-[300px] w-[300px] rounded-full bg-cyan-700/20 blur-[110px]"></div>
+          <div className="absolute top-[35%] right-[-10%] h-[280px] w-[280px] rounded-full bg-blue-700/20 blur-[110px]"></div>
+        </div>
+
         {/* Welcome Section */}
-        <div className="pb-2 px-4">
-          <div className="max-w-4xl mx-auto text-center">
+        <div className="px-4 pb-4 pt-5 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-5xl text-center">
             <div className="mb-4">
-              <h1 className="text-3xl md:text-5xl font-bold mb-4 py-3 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+              <h1 className="text-balance bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text py-2 text-2xl font-semibold text-transparent sm:text-4xl md:text-5xl">
                 {currentUser ? (
                   <>Hello {currentUser.name}! Welcome to Reportify</>
                 ) : (
                   <>Welcome to Reportify!</>
                 )}
               </h1>
-              <p className="text-lg md:text-xl text-gray-300 mb-4">
+              <p className="mx-auto max-w-2xl text-sm text-slate-300 sm:text-lg">
                 Generate your report effortlessly in 3 simple steps.
               </p>
             </div>
@@ -610,23 +615,23 @@ const HomePage = () => {
         </div>
 
         {/* Progress Indicator */}
-        <div className="max-w-4xl mx-auto px-4 mb-8">
-          <div className="flex items-center justify-center gap-4">
+        <div className="mx-auto mb-6 max-w-5xl px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-center gap-2 sm:gap-4">
             {[1, 2, 3].map((step) => (
               <div key={step} className="flex items-center">
                 <div
-                  className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-lg transition-all duration-300 ${currentStep >= step
-                    ? "bg-gradient-to-r from-blue-500 to-purple-500 text-white shadow-lg"
-                    : "bg-gray-700 text-gray-400"
+                  className={`flex h-9 w-9 items-center justify-center rounded-full text-sm font-semibold transition-all duration-300 sm:h-11 sm:w-11 sm:text-base ${currentStep >= step
+                    ? "bg-gradient-to-r from-cyan-500 to-blue-600 text-white shadow-lg"
+                    : "bg-slate-700 text-slate-300"
                     }`}
                 >
                   {step}
                 </div>
                 {step < 3 && (
                   <div
-                    className={`w-16 h-1 mx-2 rounded transition-all duration-300 ${currentStep > step
-                      ? "bg-gradient-to-r from-blue-500 to-purple-500"
-                      : "bg-gray-700"
+                    className={`mx-1 h-0.5 w-8 rounded transition-all duration-300 sm:mx-2 sm:w-16 ${currentStep > step
+                      ? "bg-gradient-to-r from-cyan-500 to-blue-600"
+                      : "bg-slate-700"
                       }`}
                   />
                 )}
@@ -635,11 +640,11 @@ const HomePage = () => {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 pb-16">
-          <div className="bg-gray-800/50 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-700/50 p-8">
+        <div className="mx-auto max-w-5xl px-4 pb-16 sm:px-6 lg:px-8">
+          <div className="rounded-3xl border border-slate-700/70 bg-slate-900/55 p-5 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-8">
             {creditsUsed >= maxCredits ? (
               <div className="flex items-center justify-center text-2xl h-full w-full p-4">
-                <div className="text-center text-gray-600 font-bold">
+                <div className="text-center font-bold text-slate-300">
                   <span className="text-red-600">
                     Insufficient Credits.
                     <br />
@@ -655,16 +660,16 @@ const HomePage = () => {
                 {" "}
                 {currentStep === 1 && (
                   <div className="space-y-6">
-                    <div className="flex items-center gap-3 mb-8">
-                      <BookOpen className="w-8 h-8 text-blue-400" />
-                      <h2 className="text-3xl font-bold">Report Details</h2>
+                    <div className="mb-8 flex items-center gap-3">
+                      <BookOpen className="h-7 w-7 text-cyan-300 sm:h-8 sm:w-8" />
+                      <h2 className="text-2xl font-semibold sm:text-3xl">Report Details</h2>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="flex items-center gap-1 text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 flex items-center gap-1 text-base font-medium text-slate-200 sm:text-lg">
                           Project Title <br />{" "}
-                          <p className="text-sm">
+                          <p className="text-xs text-slate-400 sm:text-sm">
                             (Displayed in the front page)
                           </p>
                         </label>
@@ -672,26 +677,26 @@ const HomePage = () => {
                           type="text"
                           value={title}
                           onChange={(e) => setTitle(e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="e.g., Reportify"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                           Subject
                         </label>
                         <input
                           type="text"
                           value={subject}
                           onChange={(e) => setSubject(e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="e.g., Artificial Intelligence"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                           Subject Code
                         </label>
                         <input
@@ -700,13 +705,13 @@ const HomePage = () => {
                           onChange={(e) =>
                             setSubjectCode(e.target.value.toUpperCase())
                           }
-                          className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="e.g., 22CS101"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                           Semester
                         </label>
                         <input
@@ -716,7 +721,7 @@ const HomePage = () => {
                           max={8}
                           value={sem}
                           onChange={(e) => setSem(e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="e.g., 6"
                         />
                         <datalist id="sems">
@@ -732,7 +737,7 @@ const HomePage = () => {
                       </div>
 
                       <div className="md:col-span-2">
-                        <label className="block text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                           Branch
                         </label>
 
@@ -740,7 +745,7 @@ const HomePage = () => {
                           type="text"
                           required
                           list="branches"
-                          className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           value={branch}
                           onChange={(e) => setBranch(e.target.value)}
                           placeholder="e.g., Computer Science and Engineering"
@@ -758,20 +763,20 @@ const HomePage = () => {
                       </div>
 
                       <div>
-                        <label className="block text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                           Professor Name
                         </label>
                         <input
                           type="text"
                           value={professorName}
                           onChange={(e) => setprofessorName(e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                          className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="Enter professor name"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-lg font-medium text-gray-300 mb-2">
+                        <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                           Professor Designation
                         </label>
                         <input
@@ -780,9 +785,7 @@ const HomePage = () => {
                           list="designations"
                           value={designation}
                           onChange={(e) => setDesignation(e.target.value)}
-                          className="w-full px-4 py-3 bg-gray-700/50 border
-                    border-gray-600 rounded-xl focus:outline-none focus:ring-2
-                    focus:ring-blue-500 transition-all duration-200"
+                            className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="e.g., Associate Professor"
                         />
                         <datalist id="designations">
@@ -792,7 +795,7 @@ const HomePage = () => {
                       </div>
                     </div>
                     <div className="md:col-span-2">
-                      <label className="block text-lg font-medium text-gray-300 mb-2">
+                      <label className="mb-2 block text-base font-medium text-slate-200 sm:text-lg">
                         Describe your project
                       </label>
 
@@ -801,7 +804,7 @@ const HomePage = () => {
                         cols={10}
                         maxLength={200}
                         required
-                        className="w-full px-4 py-3 bg-gray-700/50 border border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                        className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
                         placeholder="e.g., AI-Powered Report Builder simplifies report creation by generating professional documents from user inputs using AI. It ensures speed, consistency, and minimal manual effort.
@@ -812,7 +815,7 @@ const HomePage = () => {
                     <div className="flex justify-end pt-6">
                       <button
                         onClick={nextStep}
-                        className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                        className="group rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-7 py-3 font-semibold text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-700 cursor-pointer"
                       >
                         <div className="flex items-center gap-2">
                           Next
@@ -825,9 +828,9 @@ const HomePage = () => {
                 {/* Step 2: Student Information */}
                 {currentStep === 2 && (
                   <div className="space-y-6">
-                    <div className="flex items-center gap-3 mb-8">
-                      <Users className="w-8 h-8 text-blue-400" />
-                      <h2 className="text-3xl font-bold">
+                    <div className="mb-8 flex items-center gap-3">
+                      <Users className="h-7 w-7 text-cyan-300 sm:h-8 sm:w-8" />
+                      <h2 className="text-2xl font-semibold sm:text-3xl">
                         Student Information
                       </h2>
                     </div>
@@ -836,16 +839,16 @@ const HomePage = () => {
                       {students.map((student, index) => (
                         <div
                           key={index}
-                          className="bg-gray-700/30 border border-gray-600/50 rounded-2xl p-6 hover:bg-gray-700/50 transition-all duration-200"
+                          className="rounded-2xl border border-slate-700/70 bg-slate-900/65 p-5 transition-all duration-200 hover:border-slate-500/70"
                         >
                           <div className="flex items-center justify-between mb-4">
-                            <h3 className="text-lg font-semibold text-blue-300">
+                            <h3 className="text-lg font-semibold text-cyan-300">
                               Student {index + 1}
                             </h3>
                             {students.length > 1 && (
                               <button
                                 onClick={() => deleteStudentField(index)}
-                                className="text-red-400 hover:text-red-300 p-2 hover:bg-red-500/20 rounded-lg transition-all duration-200 cursor-pointer"
+                                className="rounded-lg p-2 text-red-400 transition-all duration-200 hover:bg-red-500/20 hover:text-red-300 cursor-pointer"
                               >
                                 <Trash2 className="w-5 h-5" />
                               </button>
@@ -854,7 +857,7 @@ const HomePage = () => {
 
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                              <label className="block text-sm font-medium text-gray-300 mb-2">
+                              <label className="mb-2 block text-sm font-medium text-slate-300">
                                 Roll Number
                               </label>
                               <input
@@ -867,13 +870,13 @@ const HomePage = () => {
                                     e.target.value;
                                   setStudents(updatedStudents);
                                 }}
-                                className="w-full px-4 py-3 bg-gray-600/50 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                                className="w-full rounded-lg border border-slate-600 bg-slate-800/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 placeholder="Enter roll number"
                               />
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-300 mb-2">
+                              <label className="mb-2 block text-sm font-medium text-slate-300">
                                 Name
                               </label>
                               <input
@@ -884,13 +887,13 @@ const HomePage = () => {
                                   updatedStudents[index].name = e.target.value;
                                   setStudents(updatedStudents);
                                 }}
-                                className="w-full px-4 py-3 bg-gray-600/50 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                                className="w-full rounded-lg border border-slate-600 bg-slate-800/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 placeholder="Enter student name"
                               />
                             </div>
 
                             <div>
-                              <label className="block text-sm font-medium text-gray-300 mb-2">
+                              <label className="mb-2 block text-sm font-medium text-slate-300">
                                 USN
                               </label>
                               <input
@@ -902,7 +905,7 @@ const HomePage = () => {
                                     e.target.value.toUpperCase();
                                   setStudents(updatedStudents);
                                 }}
-                                className="w-full px-4 py-3 bg-gray-600/50 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200"
+                                className="w-full rounded-lg border border-slate-600 bg-slate-800/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                                 placeholder="Enter USN"
                               />
                             </div>
@@ -913,7 +916,7 @@ const HomePage = () => {
 
                     <button
                       onClick={addStudentField}
-                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 px-6 py-4 rounded-xl font-semibold transition-all duration-300 transform hover:scale-[1.02] cursor-pointer"
+                      className="w-full rounded-xl border border-emerald-400/35 bg-emerald-500/20 px-6 py-4 font-semibold text-emerald-100 transition-all duration-300 hover:bg-emerald-500/30 cursor-pointer"
                     >
                       <div className="flex items-center justify-center gap-2">
                         <Plus className="w-5 h-5" />
@@ -924,7 +927,7 @@ const HomePage = () => {
                     <div className="flex justify-between pt-6">
                       <button
                         onClick={prevStep}
-                        className="group bg-gray-600 hover:bg-gray-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer"
+                        className="group rounded-xl border border-slate-600 bg-slate-700/80 px-7 py-3 font-semibold transition-all duration-300 hover:bg-slate-700 cursor-pointer"
                       >
                         <div className="flex items-center gap-2">
                           <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
@@ -934,7 +937,7 @@ const HomePage = () => {
 
                       <button
                         onClick={nextStep}
-                        className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 cursor-pointer"
+                        className="group rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-7 py-3 font-semibold text-white transition-all duration-300 hover:from-cyan-600 hover:to-blue-700 cursor-pointer"
                       >
                         <div className="flex items-center gap-2">
                           Next
@@ -947,17 +950,17 @@ const HomePage = () => {
                 {/* Step 3: Report Sections */}
                 {currentStep === 3 && (
                   <div className="space-y-6" ref={scrollContainerRef}>
-                    <div className="flex items-center gap-3 mb-8">
-                      <BookOpen className="w-8 h-8 text-blue-400" />
+                    <div className="mb-8 flex items-center gap-3">
+                      <BookOpen className="h-7 w-7 text-cyan-300 sm:h-8 sm:w-8" />
                       <div>
-                        <h2 className="text-3xl font-bold">Report Sections</h2>
+                        <h2 className="text-2xl font-semibold sm:text-3xl">Report Sections</h2>
                         {innerWidth < 575 ? (
-                          <p className="text-red-400 text-sm">
+                          <p className="text-sm text-amber-300">
                             Click and hold to drag the sections, then rearrange
                             them as you like.
                           </p>
                         ) : (
-                          <p className="text-red-400 ">
+                          <p className="text-amber-300">
                             Drag and rearrange the sections.
                           </p>
                         )}
@@ -972,19 +975,19 @@ const HomePage = () => {
                           onDragStart={(e) => handleDragStart(e, index)}
                           onDragEnd={handleDragEnd}
                           onDragOver={(e) => handleDragOver(e, index)}
-                          className={`bg-gray-700/30 border border-gray-600/50 rounded-xl p-4 transition-all duration-200 cursor-move hover:bg-gray-700/50 ${draggedIndex === index
-                            ? "opacity-50 border-blue-400"
+                          className={`cursor-move rounded-xl border border-slate-700/70 bg-slate-900/65 p-4 transition-all duration-200 hover:border-slate-500/70 ${draggedIndex === index
+                            ? "opacity-50 border-cyan-400"
                             : ""
                             }`}
                         >
                           <div className="flex items-center gap-4">
-                            <GripVertical className="w-5 h-5 text-gray-400" />
+                            <GripVertical className="h-5 w-5 text-slate-400" />
                             <span className="flex-1 font-medium">
                               {index + 1}. {section.title}
                             </span>
                             <button
                               onClick={() => handleDelete(index)}
-                              className="text-red-400 hover:text-red-300 p-2 hover:bg-red-500/20 rounded-lg transition-all duration-200"
+                              className="rounded-lg p-2 text-red-400 transition-all duration-200 hover:bg-red-500/20 hover:text-red-300"
                             >
                               <Trash2 className="w-4 h-4" />
                             </button>
@@ -993,8 +996,8 @@ const HomePage = () => {
                       ))}
                     </div>
 
-                    <div className="bg-gray-700/30 border border-gray-600/50 rounded-xl p-6 max-[400px]:p-2">
-                      <h3 className="text-lg font-semibold mb-4 text-blue-300">
+                    <div className="rounded-xl border border-slate-700/70 bg-slate-900/65 p-4 sm:p-6">
+                      <h3 className="mb-4 text-lg font-semibold text-cyan-300">
                         Add New Section
                       </h3>
                       <div className="flex gap-3 max-[400px]:gap-1">
@@ -1003,12 +1006,12 @@ const HomePage = () => {
                           value={newSection}
                           onChange={(e) => setNewSection(e.target.value)}
                           onKeyPress={(e) => e.key === "Enter" && addSection()}
-                          className="flex-1 px-4 py-3 bg-gray-600/50 border border-gray-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200 "
+                          className="flex-1 rounded-lg border border-slate-600 bg-slate-800/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                           placeholder="Enter section title"
                         />
                         <button
                           onClick={addSection}
-                          className="px-5 py-2 border-gray-500 border-1 rounded-lg font-semibold transition-all transform max-[420px]:border-none max-[420px]:px-0 hover:scale-105 cursor-pointer"
+                          className="rounded-lg border border-slate-500 px-5 py-2 font-semibold transition-all max-[420px]:border-none max-[420px]:px-0 hover:border-cyan-400 cursor-pointer"
                         >
                           <Plus className="w-6 h-6" />
                         </button>
@@ -1018,7 +1021,7 @@ const HomePage = () => {
                     <div className="flex justify-between gap-6 pt-6">
                       <button
                         onClick={prevStep}
-                        className="group bg-gray-600 hover:bg-gray-700 px-8 py-3 rounded-xl font-semibold transition-all duration-300 cursor-pointer max-[400px]:px-4 "
+                        className="group rounded-xl border border-slate-600 bg-slate-700/80 px-8 py-3 font-semibold transition-all duration-300 hover:bg-slate-700 cursor-pointer max-[400px]:px-4"
                       >
                         <div className="flex items-center gap-2">
                           <ChevronLeft className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
@@ -1028,10 +1031,10 @@ const HomePage = () => {
 
                       <button
                         onClick={() => setFlag2(true)}
-                        className="group bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 p-4 rounded-xl font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-2xl hover:shadow-purple-500/25 cursor-pointer"
+                        className="group rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 p-4 text-lg font-bold text-white shadow-2xl transition-all duration-300 hover:from-cyan-600 hover:to-blue-700 hover:shadow-cyan-500/25 cursor-pointer"
                       >
-                        <div className="flex items-center gap-3 text-2xl max-[542px]:text-[16px]">
-                          <Sparkles className="w-8 h-8 group-hover:rotate-12 transition-transform duration-300 max-[542px]:w-6 max-[542px]:h-6 max-[400px]:w-8 max-[400px]:h-8" />
+                        <div className="flex items-center gap-3 text-xl sm:text-2xl max-[542px]:text-[16px]">
+                          <Sparkles className="h-7 w-7 transition-transform duration-300 group-hover:rotate-12 sm:h-8 sm:w-8 max-[542px]:h-6 max-[542px]:w-6 max-[400px]:h-8 max-[400px]:w-8" />
                           Generate Report
                         </div>
                       </button>
