@@ -37,6 +37,7 @@ const HomePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [currentSection, setCurrentSection] = useState("");
   const [num, setNum] = useState(0);
+  const [retryStatusMessage, setRetryStatusMessage] = useState("");
   const [innerWidth, setInnerWidth] = useState(window.innerWidth);
   const [warningVisible, setWarningVisible] = useState(true)
   useEffect(() => {
@@ -326,6 +327,7 @@ const HomePage = () => {
     }
     setFlag2(false);
     setFlag(true);
+    setRetryStatusMessage("");
     let content = "";
     const fallbackSections = [];
     const placeholderSections = [];
@@ -334,6 +336,7 @@ const HomePage = () => {
       setNum((prevNum) => prevNum + 1);
 
       setCurrentSection(section.title);
+      setRetryStatusMessage("");
 
       const payload = {
         title: section.title,
@@ -357,10 +360,21 @@ const HomePage = () => {
           backoffMultiplier: 2,
           maxDelayMs: 4000,
           timeoutMs: 20000,
+          onRetry: ({ nextAttempt, delayMs }) => {
+            setRetryStatusMessage(
+              `Temporary issue detected. Retrying in ${Math.ceil(
+                delayMs / 1000
+              )}s (attempt ${nextAttempt}/3)...`
+            );
+          },
           fallbackFn: async (lastError) => {
             if (!isTransientError(lastError)) {
               throw lastError;
             }
+
+            setRetryStatusMessage(
+              "Retry limit reached. Trying a simpler fallback generation..."
+            );
 
             const simplePromptPayload = {
               ...payload,
@@ -373,10 +387,14 @@ const HomePage = () => {
                 simplePromptPayload,
                 { timeout: 15000 }
               );
+              setRetryStatusMessage("");
               fallbackSections.push(section.title);
               return fallbackResponse;
             } catch (_fallbackError) {
               placeholderSections.push(section.title);
+              setRetryStatusMessage(
+                "Fallback failed for this section. Adding placeholder text and continuing..."
+              );
               return {
                 data: {
                   data: placeholderText,
@@ -387,8 +405,10 @@ const HomePage = () => {
         });
 
         content += response?.data?.data || placeholderText;
+        setRetryStatusMessage("");
       } catch (error) {
         content += placeholderText;
+        setRetryStatusMessage("");
         if (error?.status === 429 || error?.response?.status === 429) {
           toast.error("Too Many Requests - please try again later");
           navigate("/");
@@ -417,6 +437,7 @@ const HomePage = () => {
       );
     }
 
+    setRetryStatusMessage("");
     setNum(0);
     setFlag(false);
     setDownloadingDoc(true);
@@ -455,8 +476,6 @@ const HomePage = () => {
       link.click();
       document.body.removeChild(link);
       URL.revokeObjectURL(link.href);
-
-      setFinalDetails(JSON.stringify(response.data, null, 2));
     } catch (error) {
       if (error.status === 429) {
         toast.error("Too Many Requests - please try again later");
@@ -519,6 +538,12 @@ const HomePage = () => {
           subMessage={`Generating ${currentSection}... (${num} / ${sections.length})`}
           className="px-3 sm:px-6"
         >
+          {retryStatusMessage ? (
+            <p className="rounded-md border border-amber-400/30 bg-amber-400/10 px-3 py-2 text-center text-xs text-amber-200 sm:text-sm">
+              {retryStatusMessage}
+            </p>
+          ) : null}
+
           <p className="text-center text-sm text-slate-300">
             Hang tight! Feel free to play a quick game while we work.
           </p>
@@ -802,7 +827,7 @@ const HomePage = () => {
                       <textarea
                         rows={3}
                         cols={10}
-                        maxLength={200}
+                        maxLength={500}
                         required
                         className="w-full rounded-xl border border-slate-600 bg-slate-900/70 px-4 py-3 text-slate-100 placeholder-slate-400 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-500"
                         value={description}
