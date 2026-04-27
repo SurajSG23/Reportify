@@ -135,7 +135,7 @@ const Team = () => {
 
         <div className="grid gap-6 md:grid-cols-2">
           <article className="group overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-900/55 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-[0_14px_28px_rgba(8,145,178,0.2)]">
-            <div className="relative h-56 overflow-hidden rounded-xl bg-cover bg-center" style={{ backgroundImage: "url('vig2.png')" }}>
+            <div className="relative h-64 overflow-hidden rounded-xl bg-slate-950 bg-contain bg-center bg-no-repeat" style={{ backgroundImage: "url('vig2.png')" }}>
               <div className="absolute left-3 top-3 rounded-full border border-cyan-300/35 bg-black/50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-200">
                 Backend
               </div>
@@ -160,7 +160,7 @@ const Team = () => {
           </article>
 
           <article className="group overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-900/55 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-[0_14px_28px_rgba(8,145,178,0.2)]">
-            <div className="relative h-56 overflow-hidden rounded-xl bg-cover bg-center" style={{ backgroundImage: "url('suraj2.png')" }}>
+            <div className="relative h-64 overflow-hidden rounded-xl bg-slate-950 bg-contain bg-center bg-no-repeat" style={{ backgroundImage: "url('suraj2.png')" }}>
               <div className="absolute left-3 top-3 rounded-full border border-cyan-300/35 bg-black/50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-200">
                 Frontend
               </div>
@@ -186,14 +186,15 @@ const Team = () => {
         </div>
 
         <section className="mt-10 rounded-2xl border border-slate-700/80 bg-slate-900/55 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-8">
-          <div className="text-center">
-            <h2 className="text-2xl font-semibold tracking-wide text-cyan-200">We Value Your Feedback</h2>
-            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
-              Share suggestions, report issues, or tell us what worked well. Your feedback helps us improve REPORTIFY continuously.
-            </p>
-          </div>
+          <div className="grid items-start gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:gap-10">
+            <div className="text-center lg:pt-2 lg:text-left">
+              <h2 className="text-2xl font-semibold tracking-wide text-cyan-200">We Value Your Feedback</h2>
+              <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base lg:mx-0">
+                Share suggestions, report issues, or tell us what worked well. Your feedback helps us improve REPORTIFY continuously.
+              </p>
+            </div>
 
-          <form onSubmit={handleFeedbackSubmit} className="mx-auto mt-6 max-w-3xl space-y-5">
+            <form onSubmit={handleFeedbackSubmit} className="space-y-5">
             <div>
               <label htmlFor="feedback" className="mb-2 block text-sm font-medium text-slate-100">
                 Your Feedback *
@@ -209,7 +210,7 @@ const Team = () => {
               />
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center lg:justify-start">
               <button
                 type="submit"
                 className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-7 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(8,145,178,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(37,99,235,0.45)] disabled:cursor-not-allowed disabled:opacity-70"
@@ -218,7 +219,8 @@ const Team = () => {
                 {msgSent ? "Sending..." : "Submit Feedback"}
               </button>
             </div>
-          </form>
+            </form>
+          </div>
         </section>
       </section>
 
