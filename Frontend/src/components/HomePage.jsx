@@ -359,7 +359,7 @@ const HomePage = () => {
           initialDelayMs: 1000,
           backoffMultiplier: 2,
           maxDelayMs: 4000,
-          timeoutMs: 20000,
+          timeoutMs: 59000,
           onRetry: ({ nextAttempt, delayMs }) => {
             setRetryStatusMessage(
               `Temporary issue detected. Retrying in ${Math.ceil(

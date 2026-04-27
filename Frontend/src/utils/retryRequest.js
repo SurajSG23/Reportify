@@ -28,7 +28,7 @@ export const requestWithRetry = async ({
   initialDelayMs = 1000,
   backoffMultiplier = 2,
   maxDelayMs = 4000,
-  timeoutMs = 20000,
+  timeoutMs = 59000,
   retryStatusCodes = DEFAULT_RETRY_STATUS_CODES,
   shouldRetry = isTransientError,
   onRetry,
