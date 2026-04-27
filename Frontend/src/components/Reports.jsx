@@ -6,6 +6,7 @@ import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { axiosClient } from "../config/axiosClient";
+import LoadingScreen from "./LoadingScreen";
 
 const getStatusCode = (error) => error?.response?.status || error?.status;
 
@@ -124,14 +125,7 @@ const Reports = () => {
   };
 
   if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white">
-        <div className="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900/60 px-6 py-4 backdrop-blur-sm">
-          <div className="h-5 w-5 animate-spin rounded-full border-2 border-cyan-300/30 border-t-cyan-300"></div>
-          <p className="text-sm tracking-wide text-slate-200">Loading reports...</p>
-        </div>
-      </div>
-    );
+    return <LoadingScreen fullScreen message="Loading reports..." />;
   }
 
   return (

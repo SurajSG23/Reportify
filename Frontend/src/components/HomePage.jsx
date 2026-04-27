@@ -9,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { axiosClient } from "../config/axiosClient";
 import { getSections } from "../constants";
 import { requestWithRetry, isTransientError } from "../utils/retryRequest";
+import LoadingScreen from "./LoadingScreen";
 import {
   ChevronRight,
   ChevronLeft,
@@ -507,65 +508,34 @@ const HomePage = () => {
         </div>
       )}
       {downloadingDoc && (
-        <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-lg z-9">
-          <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
-            <div className="w-10 h-10 border-4 border-t-transparent border-blue-400 rounded-full animate-spin"></div>
-            <p className="mt-4 text-2xl font-medium text-gray-300 text-center">
-              Downloading your report...
-            </p>
-          </div>
-        </div>
+        <LoadingScreen message="Downloading your report..." />
       )}
       {loading && (
-        <div className="fixed inset-0 flex justify-center items-center bg-opacity-50 backdrop-blur-lg z-9">
-          <div className="flex flex-col items-center p-6 bg-gray-900 text-white rounded-2xl shadow-xl">
-            <div className="w-10 h-10 border-4 border-t-transparent border-blue-400 rounded-full animate-spin"></div>
-            <p className="mt-4 text-2xl font-medium text-gray-300 text-center">
-              Loading Homepage...
-            </p>
-          </div>
-        </div>
+        <LoadingScreen message="Loading homepage..." />
       )}
       {flag && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-lg px-3 sm:px-6 overflow-y-auto">
+        <LoadingScreen
+          message="Your report is being generated. Please wait."
+          subMessage={`Generating ${currentSection}... (${num} / ${sections.length})`}
+          className="px-3 sm:px-6"
+        >
+          <p className="text-center text-sm text-slate-300">
+            Hang tight! Feel free to play a quick game while we work.
+          </p>
 
-          <div className="flex flex-col items-center p-4 sm:p-6 bg-gray-900 text-white rounded-2xl shadow-xl w-full max-w-3xl">
-
-            {/* Spinner */}
-            <div className="w-10 h-10 border-4 border-t-transparent border-blue-400 rounded-full animate-spin"></div>
-
-            <p className="mt-4 text-lg sm:text-2xl font-medium text-gray-300 text-center">
-              Your report is being generated. Please wait.
-            </p>
-
-            <span className="mt-2 text-sm sm:text-xl font-semibold text-blue-400 animate-pulse text-center">
-              Generating {currentSection}... ( {num} / {sections.length} )
-            </span>
-
-            <p className="text-sm text-gray-400 text-center my-2">
-              Hang tight! Feel free to play a quick game while we work 😀
-            </p>
-
-            {/* Game */}
-            <div className="w-full flex justify-center overflow-hidden">
-              <iframe
-                src="https://reportify-game.vercel.app/"
-                className="w-full max-w-[600px] h-[200px] sm:h-[250px] border-none rounded-lg bg-white"
-                title="Dino Jump Game"
-              />
-            </div>
-
-            <p className="text-xs text-gray-500 text-center my-2">
-              <span className="block sm:hidden">
-                Tap the dino to start.
-              </span>
-
-              <span className="hidden sm:block">
-                Tap the dino and press space to start.
-              </span>
-            </p>
+          <div className="mt-3 flex w-full justify-center overflow-hidden">
+            <iframe
+              src="https://reportify-game.vercel.app/"
+              className="h-[200px] w-full max-w-[600px] rounded-lg border-none bg-white sm:h-[250px]"
+              title="Dino Jump Game"
+            />
           </div>
-        </div>
+
+          <p className="my-2 text-center text-xs text-slate-400">
+            <span className="block sm:hidden">Tap the dino to start.</span>
+            <span className="hidden sm:block">Tap the dino and press space to start.</span>
+          </p>
+        </LoadingScreen>
       )}
 
       {flag2 && (
