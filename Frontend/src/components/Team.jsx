@@ -52,7 +52,7 @@ const Team = () => {
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [auth, navigate]);
 
   const handleFeedbackSubmit = async (e) => {
     e.preventDefault();
@@ -106,147 +106,96 @@ const Team = () => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-screen bg-black">
-        <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
-        <p className="text-white mt-4">Loading...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white">
+        <div className="flex items-center gap-3 rounded-2xl border border-slate-700 bg-slate-900/60 px-6 py-4 backdrop-blur-sm">
+          <div className="h-5 w-5 animate-spin rounded-full border-2 border-cyan-300/30 border-t-cyan-300"></div>
+          <p className="text-sm tracking-wide text-slate-200">Loading team...</p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col min-h-screen justify-between overflow-hidden bg-gradient-to-br from-black via-gray-800 to-gray-900">
-      <div>
-        <Header handleLogout={handleLogout} />
+    <main className="relative flex min-h-screen flex-col overflow-hidden bg-gradient-to-b from-[#191932] via-[#000000] to-[#0F172A] text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -top-24 left-[-8%] h-[360px] w-[360px] rounded-full bg-cyan-700/20 blur-[120px]"></div>
+        <div className="absolute top-[34%] right-[-8%] h-[310px] w-[310px] rounded-full bg-blue-700/20 blur-[110px]"></div>
       </div>
 
-      <div className="relative h-auto w-full rounded-t-[10px] animate-fade-in flex justify-center items-center flex-wrap gap-[10vw] py-8 md:py-16 px-4 md:flex-row flex-col md:gap-[10vw] gap-[5vh]">
-        <div className="group w-64 rounded-[20px] bg-black p-[5px] overflow-hidden shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-gray-600 hover:scale-105">
-          <div
-            className="relative h-[200px] rounded-[15px] flex flex-col bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('vig2.png')" }}
-          >
-            <div className="relative h-[30px] w-[130px] bg-black transform -skew-x-[40deg] rounded-br-[10px] shadow-[-10px_-10px_0_0_black] before:content-[''] before:absolute before:w-[15px] before:h-[15px] before:top-0 before:right-[-15px] before:bg-transparent before:rounded-tl-[10px] before:shadow-[-5px_-5px_0_2px_black] after:content-[''] after:absolute after:top-[30px] after:left-0 after:bg-transparent after:h-[15px] after:w-[15px] after:rounded-tl-[15px] after:shadow-[-5px_-5px_0_2px_black]"></div>
+      <Header handleLogout={handleLogout} />
 
-            <div className="absolute top-0 w-full h-[30px] flex justify-between">
-              <div className="h-full aspect-square pt-[7px] pb-[7px] pl-[15px] text-white flex justify-center items-center font-bold">
+      <section className="relative mx-auto w-full max-w-7xl flex-1 px-5 pb-14 pt-8 sm:px-8 lg:px-12">
+        <div className="mb-8">
+          <p className="text-xs uppercase tracking-[0.2em] text-cyan-200/80">About Us</p>
+          <h1 className="mt-2 text-3xl font-semibold text-white sm:text-4xl">Meet The Team</h1>
+          <p className="mt-2 max-w-2xl text-sm text-slate-300 sm:text-base">
+            The people behind REPORTIFY, building reliable AI-assisted report generation for students.
+          </p>
+        </div>
+
+        <div className="grid gap-6 md:grid-cols-2">
+          <article className="group overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-900/55 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-[0_14px_28px_rgba(8,145,178,0.2)]">
+            <div className="relative h-56 overflow-hidden rounded-xl bg-cover bg-center" style={{ backgroundImage: "url('vig2.png')" }}>
+              <div className="absolute left-3 top-3 rounded-full border border-cyan-300/35 bg-black/50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-200">
                 Backend
               </div>
             </div>
-          </div>
 
-          <div className="mt-[15px] p-[10px_5px]">
-            <p className="font-bold text-blue-300 text-2xl text-center tracking-[2px]">
-              VIGNESH D
-            </p>
-            <p className="text-white text-sm text-center mt-2">
-              Student @ SJCE 26'
-            </p>
-            <div className="flex justify-between mt-5">
-              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://github.com/Vignesh9123"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub className="text-4xl duration-100 hover:text-zinc-700 hover:scale-125 transition-all" />
+            <div className="px-2 pb-2 pt-4">
+              <h2 className="text-xl font-semibold tracking-wide text-cyan-200 sm:text-2xl">VIGNESH D</h2>
+              <p className="mt-1 text-sm text-slate-300">Student @ SJCE 26&apos;</p>
+
+              <div className="mt-5 flex items-center gap-3">
+                <a href="https://github.com/Vignesh9123" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-slate-700 bg-slate-800/70 p-3 text-slate-200 transition-colors duration-300 hover:border-cyan-400/40 hover:text-cyan-200">
+                  <FaGithub className="text-2xl" />
                 </a>
-              </div>
-              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer border-l border-r border-white/20">
-                <a
-                  href="https://www.linkedin.com/in/vignesh-d-mys/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-125 transition-all" />
+                <a href="https://www.linkedin.com/in/vignesh-d-mys/" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-slate-700 bg-slate-800/70 p-3 text-slate-200 transition-colors duration-300 hover:border-cyan-400/40 hover:text-cyan-200">
+                  <FaLinkedin className="text-2xl" />
                 </a>
-              </div>
-              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-125 transition-all" />
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=vignesh.d9123@gmail.com" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-slate-700 bg-slate-800/70 p-3 text-slate-200 transition-colors duration-300 hover:border-cyan-400/40 hover:text-cyan-200">
+                  <SiGmail className="text-2xl" />
                 </a>
               </div>
             </div>
-          </div>
-        </div>
+          </article>
 
-        <div className="group w-64 rounded-[20px] bg-black p-[5px] overflow-hidden shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px] transition-transform duration-500 ease-[cubic-bezier(0.175,0.885,0.32,1.275)] border border-gray-600 hover:scale-105">
-          <div
-            className="relative h-[200px] rounded-[15px] flex flex-col bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('suraj2.png')" }}
-          >
-            <div className="relative h-[30px] w-[130px] bg-black transform -skew-x-[40deg] rounded-br-[10px] shadow-[-10px_-10px_0_0_black] before:content-[''] before:absolute before:w-[15px] before:h-[15px] before:top-0 before:right-[-15px] before:bg-transparent before:rounded-tl-[10px] before:shadow-[-5px_-5px_0_2px_black] after:content-[''] after:absolute after:top-[30px] after:left-0 after:bg-transparent after:h-[15px] after:w-[15px] after:rounded-tl-[15px] after:shadow-[-5px_-5px_0_2px_black]"></div>
-
-            <div className="absolute top-0 w-full h-[30px] flex justify-between">
-              <div className="h-full aspect-square pt-[7px] pb-[7px] pl-[15px] text-white flex justify-center items-center font-bold">
+          <article className="group overflow-hidden rounded-2xl border border-slate-700/80 bg-slate-900/55 p-4 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-[0_14px_28px_rgba(8,145,178,0.2)]">
+            <div className="relative h-56 overflow-hidden rounded-xl bg-cover bg-center" style={{ backgroundImage: "url('suraj2.png')" }}>
+              <div className="absolute left-3 top-3 rounded-full border border-cyan-300/35 bg-black/50 px-3 py-1 text-xs font-medium uppercase tracking-wide text-cyan-200">
                 Frontend
               </div>
             </div>
-          </div>
 
-          <div className="mt-[15px] p-[10px_5px]">
-            <p className="font-bold text-blue-300 text-[21px] text-center tracking-[2px]">
-              SURAJ S G DHANVA
-            </p>
-            <p className="text-white text-sm text-center mt-2">
-              Student @ SJCE 26'
-            </p>
-            <div className="flex justify-between mt-5">
-              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://github.com/SurajSG23"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaGithub className="text-4xl duration-100 hover:text-zinc-700 hover:scale-125 transition-all" />
+            <div className="px-2 pb-2 pt-4">
+              <h2 className="text-xl font-semibold tracking-wide text-cyan-200 sm:text-2xl">SURAJ S G DHANVA</h2>
+              <p className="mt-1 text-sm text-slate-300">Student @ SJCE 26&apos;</p>
+
+              <div className="mt-5 flex items-center gap-3">
+                <a href="https://github.com/SurajSG23" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-slate-700 bg-slate-800/70 p-3 text-slate-200 transition-colors duration-300 hover:border-cyan-400/40 hover:text-cyan-200">
+                  <FaGithub className="text-2xl" />
                 </a>
-              </div>
-              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer border-l border-r border-white/20">
-                <a
-                  href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <FaLinkedin className="text-4xl duration-100 hover:text-blue-500 hover:scale-125 transition-all" />
+                <a href="https://www.linkedin.com/in/suraj-s-g-dhanva-995a23298/" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-slate-700 bg-slate-800/70 p-3 text-slate-200 transition-colors duration-300 hover:border-cyan-400/40 hover:text-cyan-200">
+                  <FaLinkedin className="text-2xl" />
                 </a>
-              </div>
-              <div className="flex-[30%] text-center p-[5px] text-white flex justify-center items-center cursor-pointer">
-                <a
-                  href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <SiGmail className="text-4xl duration-100 hover:text-red-500 hover:scale-125 transition-all" />
+                <a href="https://mail.google.com/mail/?view=cm&fs=1&to=surajsgd23@gmail.com" target="_blank" rel="noopener noreferrer" className="rounded-lg border border-slate-700 bg-slate-800/70 p-3 text-slate-200 transition-colors duration-300 hover:border-cyan-400/40 hover:text-cyan-200">
+                  <SiGmail className="text-2xl" />
                 </a>
               </div>
             </div>
-          </div>
+          </article>
         </div>
-      </div>
 
-      {/* Feedback Form Section */}
-      <div className="w-full p-4 flex justify-center">
-        <div className="max-w-2xl w-full bg-black/40 backdrop-blur-sm rounded-[20px] p-8 border border-gray-600 shadow-[rgba(0,0,0,0.2)_0px_7px_20px_0px]">
-          <div className="text-center mb-4">
-            <h2 className="text-2xl font-bold text-blue-300 tracking-[2px] mb-4">
-              WE VALUE YOUR FEEDBACK
-            </h2>
-            <p className="text-white/80 text-md leading-relaxed">
-              Help us improve! Share your thoughts, suggestions, or report any
-              issues you've encountered. Your feedback drives our continuous
-              improvement and helps us build better solutions.
+        <section className="mt-10 rounded-2xl border border-slate-700/80 bg-slate-900/55 p-6 shadow-[0_10px_24px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-8">
+          <div className="text-center">
+            <h2 className="text-2xl font-semibold tracking-wide text-cyan-200">We Value Your Feedback</h2>
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-slate-300 sm:text-base">
+              Share suggestions, report issues, or tell us what worked well. Your feedback helps us improve REPORTIFY continuously.
             </p>
           </div>
 
-          <form onSubmit={handleFeedbackSubmit} className="space-y-6">
+          <form onSubmit={handleFeedbackSubmit} className="mx-auto mt-6 max-w-3xl space-y-5">
             <div>
-              <label
-                htmlFor="feedback"
-                className="block text-white font-semibold mb-3 text-sm"
-              >
+              <label htmlFor="feedback" className="mb-2 block text-sm font-medium text-slate-100">
                 Your Feedback *
               </label>
               <textarea
@@ -255,7 +204,7 @@ const Team = () => {
                 onChange={(e) => setMsg(e.target.value)}
                 placeholder="Tell us what you think... We're listening!"
                 rows={6}
-                className="w-full p-4 bg-gray-900/60 border border-gray-600 rounded-[15px] text-white placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 transition-all duration-300 resize-none"
+                className="w-full resize-none rounded-xl border border-slate-600 bg-slate-900/70 p-4 text-slate-100 placeholder-slate-400 transition-colors duration-300 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20"
                 required
               />
             </div>
@@ -263,20 +212,18 @@ const Team = () => {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold rounded-[15px] border border-blue-500 hover:from-blue-700 hover:to-blue-800 hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-blue-500/25 cursor-pointer"
+                className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 px-7 py-3 text-sm font-semibold text-white shadow-[0_12px_30px_rgba(8,145,178,0.35)] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_16px_34px_rgba(37,99,235,0.45)] disabled:cursor-not-allowed disabled:opacity-70"
                 disabled={msgSent}
               >
                 {msgSent ? "Sending..." : "Submit Feedback"}
               </button>
             </div>
           </form>
-        </div>
-      </div>
+        </section>
+      </section>
 
-      <div>
-        <Footer />
-      </div>
-    </div>
+      <Footer />
+    </main>
   );
 };
 
