@@ -125,16 +125,16 @@ export default function App() {
       </div>
 
       <section className="relative mx-auto flex min-h-screen w-full max-w-7xl flex-col justify-center px-5 pb-14 pt-10 sm:px-8 lg:px-12">
-        
+
         <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
-            <div className="flex w-full items-center gap-3 sm:gap-5">
+            <div className="flex w-full flex-col items-center gap-3 text-center sm:flex-row sm:items-center sm:gap-5 sm:text-left">
               <img
                 src="favicon.png"
                 alt="Reportify logo"
                 className="h-14 w-14 shrink-0 rounded-xl border border-cyan-200/20 bg-slate-900/60 p-2.5 shadow-[0_14px_35px_rgba(0,0,0,0.45)] sm:h-16 sm:w-16 sm:rounded-2xl sm:p-3"
               />
-              <h1 className="text-balance text-2xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
+              <h1 className="text-balance text-3xl font-semibold leading-tight text-white sm:text-4xl lg:text-5xl">
                 Welcome to REPORTIFY
               </h1>
             </div>
