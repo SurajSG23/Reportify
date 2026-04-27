@@ -8,6 +8,7 @@ import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { axiosClient } from "../config/axiosClient";
 import { getSections } from "../constants";
+import { requestWithRetry, isTransientError } from "../utils/retryRequest";
 import {
   ChevronRight,
   ChevronLeft,
@@ -325,31 +326,96 @@ const HomePage = () => {
     setFlag2(false);
     setFlag(true);
     let content = "";
+    const fallbackSections = [];
+    const placeholderSections = [];
 
     for (const section of sections) {
       setNum((prevNum) => prevNum + 1);
 
       setCurrentSection(section.title);
+
+      const payload = {
+        title: section.title,
+        promptContent: section.prompt,
+        description: description,
+        subject: subject,
+        firstSection: section.title == sections[0].title,
+        lastSection: section.title == sections[sections.length - 1].title,
+      };
+
+      const placeholderText = `\n\n## ${section.title}\n\nContent temporarily unavailable due to AI service issues. Please review this section manually.\n`;
+
       try {
-        const response = await axiosClient.post(
-          "/content/generate",
-          {
-            title: section.title,
-            promptContent: section.prompt,
-            description: description,
-            subject: subject,
-            firstSection: section.title == sections[0].title,
-            lastSection: section.title == sections[sections.length - 1].title,
-          }
-        );
-        content += response.data.data;
+        const response = await requestWithRetry({
+          requestFn: ({ timeoutMs }) =>
+            axiosClient.post("/content/generate", payload, {
+              timeout: timeoutMs,
+            }),
+          maxRetries: 2,
+          initialDelayMs: 1000,
+          backoffMultiplier: 2,
+          maxDelayMs: 4000,
+          timeoutMs: 20000,
+          fallbackFn: async (lastError) => {
+            if (!isTransientError(lastError)) {
+              throw lastError;
+            }
+
+            const simplePromptPayload = {
+              ...payload,
+              promptContent: `Write a concise section titled "${section.title}" for topic "${title}". Keep it clear and practical.`,
+            };
+
+            try {
+              const fallbackResponse = await axiosClient.post(
+                "/content/generate",
+                simplePromptPayload,
+                { timeout: 15000 }
+              );
+              fallbackSections.push(section.title);
+              return fallbackResponse;
+            } catch (_fallbackError) {
+              placeholderSections.push(section.title);
+              return {
+                data: {
+                  data: placeholderText,
+                },
+              };
+            }
+          },
+        });
+
+        content += response?.data?.data || placeholderText;
       } catch (error) {
-        if (error.status === 429) {
+        content += placeholderText;
+        if (error?.status === 429 || error?.response?.status === 429) {
           toast.error("Too Many Requests - please try again later");
           navigate("/");
+          return;
         }
+
+        if (error?.status === 401 || error?.response?.status === 401) {
+          toast.error("Session Expired - please login again");
+          navigate("/");
+          return;
+        }
+
+        toast.error(`Failed to generate section: ${section.title}`);
       }
     }
+
+    if (fallbackSections.length > 0) {
+      toast.warn(
+        `Used simplified generation for ${fallbackSections.length} section(s).`
+      );
+    }
+
+    if (placeholderSections.length > 0) {
+      toast.warn(
+        `Added placeholder text for ${placeholderSections.length} section(s) to continue report generation.`
+      );
+    }
+
     setNum(0);
     setFlag(false);
     setDownloadingDoc(true);
