@@ -8,12 +8,12 @@ const authMiddleware = (req: express.Request, res: express.Response, next: expre
     try {
         let token;
         const headerToken = req.headers.authorization?.split("Bearer ")?.[1]
-	if(headerToken && headerToken.length > 0){
-	   token = headerToken.trim();
-	}
-	else{
-	   token = req.cookies?.token || null;
-	}
+        if(headerToken && headerToken.length > 0){
+            token = headerToken.trim();
+        }
+        else{
+            token = req.cookies?.token || null;
+        }
   
         if (!token) {
             throw new ApiError(401, "Unauthorized");

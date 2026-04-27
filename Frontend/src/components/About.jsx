@@ -3,7 +3,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { axiosClient } from "../config/axiosClient";
 import { toast } from "react-toastify";
 
 const About = () => {
@@ -15,13 +15,8 @@ const About = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
-            withCredentials: true,
-            headers: {
-              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
-            },
-          })
+        const signOutPromise = axiosClient
+          .get("/auth/logout")
           .then(() => {
             localStorage.removeItem("token");
             navigate("/");

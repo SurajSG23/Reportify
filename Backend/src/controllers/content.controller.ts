@@ -12,6 +12,6 @@ export const generateContent = asyncHandler(async (req: Request, res: Response) 
         if(user.creditsUsed >= user.maxCredits) throw new ApiError(400, "You have reached your credits limit");
     }
     if (!title || !promptContent) throw new ApiError(400, "Missing required fields");
-    const content = await generateSectionContent(title, subject, promptContent, lastSection, description);
-    return res.status(200).json(new ApiResponse(200, "Content generated successfully", content, true));
+    const response = await generateSectionContent(title, subject, promptContent, lastSection, description);
+    return res.status(200).json(new ApiResponse(200, "Content generated successfully", response.content, response.success));
 });

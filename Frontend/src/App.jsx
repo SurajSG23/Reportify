@@ -5,7 +5,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
+import { axiosClient } from "./config/axiosClient";
 
 const provider = new GoogleAuthProvider();
 const firebaseConfig = {
@@ -48,16 +48,10 @@ export default function App() {
       const userData = {
         idtoken: await user.getIdToken(),
       };
-      const signInPromise = axios
+      const signInPromise = axiosClient
         .post(
-          "https://reportify-backend.vercel.app/api/auth/google-login",
-          userData,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-            withCredentials: true,
-          }
+          "/auth/google-login",
+          userData
         )
         .then((response) => {
           localStorage.setItem("token", response.data.data.token);

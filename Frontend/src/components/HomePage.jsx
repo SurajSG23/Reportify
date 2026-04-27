@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
+import { axiosClient } from "../config/axiosClient";
 import { getSections } from "../constants";
 import {
   ChevronRight,
@@ -50,14 +50,8 @@ const HomePage = () => {
   const fetchCurrentUser = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "https://reportify-backend.vercel.app/api/auth/current-user",
-        {
-          headers: {
-            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
-          },
-          withCredentials: true,
-        }
+      const response = await axiosClient.get(
+        "/auth/current-user"
       );
       setCurrentUser(response.data.data);
 
@@ -97,13 +91,8 @@ const HomePage = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
-            withCredentials: true,
-            headers: {
-              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
-            },
-          })
+        const signOutPromise = axiosClient
+          .get("/auth/logout")
           .then(() => {
             localStorage.removeItem("token");
             navigate("/");
@@ -342,8 +331,8 @@ const HomePage = () => {
 
       setCurrentSection(section.title);
       try {
-        const response = await axios.post(
-          "https://reportify-backend.vercel.app/api/content/generate",
+        const response = await axiosClient.post(
+          "/content/generate",
           {
             title: section.title,
             promptContent: section.prompt,
@@ -351,13 +340,6 @@ const HomePage = () => {
             subject: subject,
             firstSection: section.title == sections[0].title,
             lastSection: section.title == sections[sections.length - 1].title,
-          },
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
-            },
-            withCredentials: true,
           }
         );
         content += response.data.data;
@@ -387,15 +369,10 @@ const HomePage = () => {
     };
 
     try {
-      const response = await axios.post(
-        "https://reportify-backend.vercel.app/api/report/generate",
+      const response = await axiosClient.post(
+        "/report/generate",
         report,
         {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
-          },
-          withCredentials: true,
           responseType: "arraybuffer",
         }
       );

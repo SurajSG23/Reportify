@@ -5,9 +5,8 @@ import Footer from "./Footer";
 import styled, { keyframes } from "styled-components";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { apiClient } from "..";
 import { toast } from "react-toastify";
+import { axiosClient } from "../config/axiosClient";
 
 const Reports = () => {
   const navigate = useNavigate();
@@ -22,13 +21,8 @@ const Reports = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
-            withCredentials: true,
-            headers: {
-              Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : ''
-            },
-          })
+        const signOutPromise = axiosClient
+          .get("/auth/logout")
           .then(() => {
             localStorage.removeItem("token");
             navigate("/");
@@ -63,14 +57,8 @@ const Reports = () => {
 
   const fetchAllReports = async () => {
     try {
-      const response = await axios.get(
-        "https://reportify-backend.vercel.app/api/report/get-all-reports",
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
-          },
-        }
+      const response = await axiosClient.get(
+        "/report/get-all-reports",
       );
       setReports(response.data.data || []);
     } catch (error) {
@@ -85,14 +73,8 @@ const Reports = () => {
 
   const deleteReport = async (reportId) => {
     try {
-      const response = await axios.delete(
-        `https://reportify-backend.vercel.app/api/report/delete?id=${reportId}`,
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
-          },
-        }
+      const response = await axiosClient.delete(
+        `/report/delete?id=${reportId}`
       );
       if (response.data.success) {
         setReports(reports.filter((report) => report._id !== reportId));
@@ -107,14 +89,8 @@ const Reports = () => {
 
   const deleteAllReports = async () => {
     try {
-      const response = await axios.delete(
-        "https://reportify-backend.vercel.app/api/report/delete-all-reports",
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
-          },
-        }
+      const response = await axiosClient.delete(
+        "/report/delete-all-reports"
       );
       if (response.data.success) {
         setReports([]);
@@ -129,14 +105,10 @@ const Reports = () => {
 
   const downloadReport = async (reportId, topic) => {
     try {
-      const response = await axios.get(
-        `https://reportify-backend.vercel.app/api/report/get-report?id=${reportId}`,
+      const response = await axiosClient.get(
+        `/report/get-report?id=${reportId}`,
         {
-          responseType: "blob",
-          withCredentials: true,
-          headers: {
-            Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
-          },
+          responseType: "blob"
         }
       );
 

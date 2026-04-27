@@ -1,18 +1,28 @@
  import { getReportModel } from "../config/geminiAI";
 
 
+interface GenerateContentResponse{
+  success: boolean
+  content: string
+}
 
-export async function generateSectionContent(title: string, subject: string, promptContent: string, lastSection?: boolean, description?: string) : Promise<string> {
+export async function generateSectionContent(title: string, subject: string, promptContent: string, lastSection?: boolean, description?: string) : Promise<GenerateContentResponse> {
   try {
     console.log(`Generating content for: ${title}...`);
     const model = getReportModel(title);
     const result = await model.generateContent(`Topic: ${title} \nSubject: ${subject}\nDescription: ${description}\nPrompt:\n\n${promptContent}`);
     console.log(`Generated content for "${title}":`, result);
     const text = result.response.text();
-    return `${text}\n${lastSection?'':'---'}\n`;
+    return {
+      success: true,
+      content: `${text}\n${lastSection?'':'---'}\n`
+    };
   } catch (error) {
     console.error(`Error generating content for "${title}":`, error);
-    return `## ${title}\n\nContent generation failed.\n\n`;
+    return {
+      success: false, 
+      content: `## ${title}\n\nContent generation failed.\n\n`
+    };
   }
 }
 

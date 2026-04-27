@@ -7,8 +7,8 @@ import Footer from "./Footer";
 import { getAuth, onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
 import emailjs from "@emailjs/browser";
+import { axiosClient } from "../config/axiosClient";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -21,8 +21,8 @@ const Team = () => {
   const handleLogout = () => {
     signOut(auth)
       .then(() => {
-        const signOutPromise = axios
-          .get("https://reportify-backend.vercel.app/api/auth/logout", {
+        const signOutPromise = axiosClient
+          .get("/auth/logout", {
             withCredentials: true,
             headers: {
               Authorization: localStorage.getItem("token") ? `Bearer ${localStorage.getItem("token")}` : '',
