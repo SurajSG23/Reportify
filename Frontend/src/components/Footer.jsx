@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col lg:flex-row justify-between items-center gap-6">
           <div className="text-center lg:text-left">
             <p className="text-gray-400 text-lg">
-              &copy; {new Date().getFullYear()} Reportify-JSSSTU. All rights reserved.
+              &copy; {new Date().getFullYear()} Reportify-AI. All rights reserved.
             </p>
           </div>
 
